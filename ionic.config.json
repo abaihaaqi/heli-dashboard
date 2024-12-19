@@ -1,0 +1,7 @@
+{
+  "name": "heli-dashboard",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
