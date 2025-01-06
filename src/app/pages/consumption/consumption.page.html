@@ -1,0 +1,71 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Consumptions </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Consumptions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- @if (consumptions.length != 0) {
+  <app-consumptions-chart></app-consumptions-chart>
+
+  <app-analyze-table></app-analyze-table>
+  }  -->
+
+  <h1 class="table-header">Consumption Table</h1>
+  @if (consumptions.length == 0) {
+  <p>You haven't turned on any appliances</p>
+  } @else {
+  <div class="table-slider">
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Appliances</th>
+            <th>Consumption</th>
+            <th>Room</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (consumption of consumptions; track consumption; let i = $index)
+          {
+          <tr>
+            <td>{{i + 1}}</td>
+            <td>{{consumption.date}}</td>
+            <td>{{consumption.time}}</td>
+            <td>{{consumption.appliance}}</td>
+            <td>{{consumption.consumption}}</td>
+            <td>{{consumption.room}}</td>
+            <td>{{consumption.status}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ion-button
+    (click)="reset()"
+    color="danger"
+    expand="block"
+    class="ion-margin-top reset-button"
+    >Reset Table</ion-button
+  >
+  }
+</ion-content>

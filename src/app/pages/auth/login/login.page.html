@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form (ngSubmit)="login()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          required
+          label="Username"
+          labelPlacement="floating"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          label="Password"
+          labelPlacement="floating"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" class="ion-margin"
+      >Login</ion-button
+    >
+    <ion-button
+      [routerLink]="['/register']"
+      expand="block"
+      fill="clear"
+      type="button"
+      class="ion-margin"
+      >Register</ion-button
+    >
+  </form>
+</ion-content>

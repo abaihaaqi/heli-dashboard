@@ -1,0 +1,37 @@
+.form-container {
+  padding: 0px 16px;
+}
+
+.table-header {
+  margin: 32px 16px 16px 16px;
+}
+
+.table-slider {
+  max-width: 100vw;
+  overflow-x: scroll;
+}
+
+.table-container {
+  width: max-content;
+  background: #efefef;
+  padding: 12px 24px;
+  margin: 0 16px;
+  border-radius: 8px;
+}
+
+.table {
+  width: max-content;
+}
+
+.table th,
+td {
+  padding: 8px;
+}
+
+.table tr {
+  border-bottom: 0.1px solid gray;
+}
+
+.reset-button {
+  margin: 16px;
+}

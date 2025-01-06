@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-margin">
+    <h1>Your appliances</h1>
+    <div class="add-button-container">
+      <ion-button [routerLink]="['/appliance/add']" type="button">
+        Add Appliance
+      </ion-button>
+    </div>
+  </div>
+
+  <div>
+    @for (room of rooms; track $index) {
+    <h2 class="ion-padding-horizontal">{{room}}</h2>
+    <ion-grid>
+      <ion-row>
+        @for (userAppliance of userAppliancesByRoom[room]; track $index) {
+        <ion-col size="6">
+          <ion-card>
+            <img
+              class="image"
+              [src]="userAppliance.image"
+              alt="{{userAppliance.appliance}} image"
+            />
+            <ion-card-header>
+              <ion-card-title>{{userAppliance.appliance}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Energy : {{userAppliance.energy}}
+            </ion-card-content>
+            <ion-toggle
+              [checked]="userAppliance.current_status == 'on'"
+              (click)="toggleAppliance(userAppliance)"
+              class="ion-margin"
+              justify="space-between"
+            >
+              Status
+            </ion-toggle>
+            <div class="action-container">
+              <ion-button
+                [routerLink]="['/appliance/update', userAppliance.id]"
+                fill="clear"
+                shape="round"
+              >
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+              <ion-button
+                (click)="handleDelete(userAppliance.id, room)"
+                fill="clear"
+                shape="round"
+                class="ion-margin-end"
+              >
+                <ion-icon
+                  slot="icon-only"
+                  color="danger"
+                  name="trash-bin-outline"
+                ></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card>
+        </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+    }
+  </div>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Chat</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Chat</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <h1>AI Analyze Table</h1>
+    <div class="chat-container">
+      <div class="chat ai-response">
+        Hello, you can ask me about specific data from the table
+      </div>
+      @for (chat of chats.AIResponse; track $index; let i = $index) {
+      <div class="user-question-container">
+        <div class="chat user-question">{{ chats.UserQuestion[i] }}</div>
+      </div>
+      <div class="chat ai-response" [innerHTML]="chat"></div>
+      }
+      <form (ngSubmit)="chat()">
+        <div class="input-query">
+          <ion-input
+            type="text"
+            [(ngModel)]="query"
+            name="query"
+            required
+          ></ion-input>
+          <ion-button fill="clear" type="submit" class="ion-margin-top"
+            >Send</ion-button
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

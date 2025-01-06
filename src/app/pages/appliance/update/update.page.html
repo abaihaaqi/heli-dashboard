@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Update User Appliance</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Update User Appliance</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>
+    <h1 class="ion-margin">Update {{applianceName}} room</h1>
+    <form (ngSubmit)="handleUpdate()">
+      <ion-list>
+        @if (rooms.length != 0) {
+        <ion-item>
+          <ion-select
+            [(ngModel)]="inputRoom"
+            name="room"
+            label="Available Room"
+            placeholder="Select"
+            interface="popover"
+          >
+            @for (room of rooms; track $index) {
+            <ion-select-option [value]="room"> {{room}} </ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+        }
+        <ion-item>
+          <ion-input
+            type="text"
+            [(ngModel)]="inputRoom"
+            name="room"
+            required
+            label="Input Room"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="block" type="submit" class="ion-margin">
+        Update
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

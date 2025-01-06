@@ -1,0 +1,49 @@
+.container {
+  margin: 0px 16px;
+  max-width: 768px;
+}
+
+.chat-container {
+  background-color: #efefef;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.chat {
+  padding: 8px;
+  width: max-content;
+  max-width: 80%;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.ai-response {
+  background-color: #4f4f4f;
+}
+
+.user-question-container {
+  display: flex;
+  justify-content: end;
+}
+
+.user-question {
+  background-color: green;
+}
+
+.input-query {
+  border: 1px solid gray;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 8px;
+  gap: 8px;
+}
+
+.input-query ion-input {
+  min-height: 32px;
+}
+
+.input-query ion-button {
+  margin: 0;
+}
