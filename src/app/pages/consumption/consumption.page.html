@@ -19,11 +19,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- @if (consumptions.length != 0) {
-  <app-consumptions-chart></app-consumptions-chart>
-
-  <app-analyze-table></app-analyze-table>
-  }  -->
+  @if (consumptions.length != 0) {
+  <app-consumptions-chart [data]="consumptions"></app-consumptions-chart>
+  }
 
   <h1 class="table-header">Consumption Table</h1>
   @if (consumptions.length == 0) {
@@ -44,14 +42,13 @@
           </tr>
         </thead>
         <tbody>
-          @for (consumption of consumptions; track consumption; let i = $index)
-          {
+          @for (consumption of consumptions; track $index; let i = $index) {
           <tr>
             <td>{{i + 1}}</td>
             <td>{{consumption.date}}</td>
             <td>{{consumption.time}}</td>
             <td>{{consumption.appliance}}</td>
-            <td>{{consumption.consumption}}</td>
+            <td>{{consumption.amount}}</td>
             <td>{{consumption.room}}</td>
             <td>{{consumption.status}}</td>
           </tr>

@@ -1,4 +1,31 @@
 <h1 class="chart-header">Consumption Chart</h1>
-<!-- <div class="chart-container">
-  <canvas id="MyChart">{{ chart }}</canvas>
-</div> -->
+<div class="select-container ion-margin">
+  <!-- <ion-select
+    [(ngModel)]="inputGroupBy"
+    interface="popover"
+    slot="start"
+    placeholder="Group by"
+  >
+    <ion-select-option value="day"> Day </ion-select-option>
+    <ion-select-option value="month"> Month </ion-select-option>
+    <ion-select-option value="year"> Year </ion-select-option>
+  </ion-select> -->
+  <ion-select
+    interface="popover"
+    slot="end"
+    [(ngModel)]="inputSelectedOption"
+    [placeholder]="selectAvailableOption[0].label"
+    [value]="selectAvailableOption[0].value"
+    (ngModelChange)="onSelectChange()"
+  >
+    @for (option of selectAvailableOption; track $index; let i = $index) {
+    <ion-select-option value="{{ option.value }}">
+      {{ option.label }}
+    </ion-select-option>
+    }
+  </ion-select>
+</div>
+<div class="ion-margin">
+  <canvas #myChart></canvas>
+</div>
+<app-analyze-table [data]="filteredData"></app-analyze-table>

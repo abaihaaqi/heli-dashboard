@@ -6,8 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { logOutOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { AiService } from 'src/app/services/ai.service';
 import { MarkdownService } from '../../services/markdown.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -26,7 +26,7 @@ export class ChatPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private aiService: AiService,
+    private chatService: ChatService,
     private markdownService: MarkdownService,
     private router: Router
   ) {
@@ -36,7 +36,7 @@ export class ChatPage implements OnInit {
   ngOnInit() {}
 
   chat() {
-    this.aiService.chat(this.query).subscribe({
+    this.chatService.chat(this.query).subscribe({
       next: (response) => {
         this.chats.UserQuestion.push(this.query);
         const markdown = this.markdownService.convertMarkdownToHtml(response);

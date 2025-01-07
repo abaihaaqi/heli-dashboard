@@ -3,6 +3,16 @@ import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/auth/register/register.page').then((m) => m.RegisterPage),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/auth/login/login.page').then((m) => m.LoginPage),
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./pages/dashboard/dashboard.page').then((m) => m.DashboardPage),
@@ -15,16 +25,6 @@ export const routes: Routes = [
         (m) => m.ConsumptionPage
       ),
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'register',
-    loadComponent: () =>
-      import('./pages/auth/register/register.page').then((m) => m.RegisterPage),
-  },
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/auth/login/login.page').then((m) => m.LoginPage),
   },
   {
     path: 'chat',

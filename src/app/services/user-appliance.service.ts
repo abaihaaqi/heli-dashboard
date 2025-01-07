@@ -37,20 +37,14 @@ export class UserApplianceService {
   }
 
   getDataByID(id: any): Observable<any> {
-    return this.http.get(`${environment.apiURL}/user-appliance/get?id=${id}`, {
-      withCredentials: true,
-    });
-  }
-
-  getRooms(): Observable<any> {
-    return this.http.get(`${environment.apiURL}/user-appliance/get-all-rooms`, {
+    return this.http.get(`${this.baseURL}/get?id=${id}`, {
       withCredentials: true,
     });
   }
 
   addUserAppliance(data: ReqAddUserAppliance): Observable<any> {
     return this.http
-      .post<any>(`${environment.apiURL}/user-appliance/add`, data, {
+      .post<any>(`${this.baseURL}/add`, data, {
         withCredentials: true,
       })
       .pipe(
@@ -78,7 +72,7 @@ export class UserApplianceService {
   ): Observable<any> {
     return this.http
       .put<any>(
-        `${environment.apiURL}/user-appliance/update`,
+        `${this.baseURL}/update`,
         { id: id, room: targetRoom },
         {
           withCredentials: true,
@@ -126,7 +120,7 @@ export class UserApplianceService {
 
   deleteUserAppliance(id: any, room: any): Observable<any> {
     return this.http
-      .delete<void>(`${environment.apiURL}/user-appliance/delete?id=${id}`, {
+      .delete<void>(`${this.baseURL}/delete?id=${id}`, {
         withCredentials: true,
       })
       .pipe(

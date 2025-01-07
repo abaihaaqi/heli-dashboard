@@ -22,9 +22,7 @@
   <div class="container">
     <h1>AI Analyze Table</h1>
     <div class="chat-container">
-      <div class="chat ai-response">
-        Hello, you can ask me about specific data from the table
-      </div>
+      <div class="chat ai-response">Hello, you can ask me anything</div>
       @for (chat of chats.AIResponse; track $index; let i = $index) {
       <div class="user-question-container">
         <div class="chat user-question">{{ chats.UserQuestion[i] }}</div>
