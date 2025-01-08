@@ -1,35 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import {
-  IonHeader,
-  IonButton,
-  IonToolbar,
-  IonContent,
-  IonTitle,
-  IonList,
-  IonItem,
-} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [
-    IonItem,
-    IonList,
-    IonTitle,
-    IonContent,
-    IonToolbar,
-    IonButton,
-    IonHeader,
-    CommonModule,
-    FormsModule,
-    RouterLink,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, RouterLink],
 })
 export class RegisterPage {
   name: string = '';

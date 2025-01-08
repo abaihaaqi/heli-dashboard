@@ -1,19 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonHeader,
-  IonButtons,
-  IonToolbar,
-  IonBackButton,
-  IonTitle,
-  IonButton,
-  IonIcon,
-  IonContent,
-  IonList,
-  IonItem,
-  IonSelectOption,
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { logOutOutline } from 'ionicons/icons';
@@ -25,21 +13,7 @@ import { UserApplianceService } from 'src/app/services/user-appliance.service';
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
   standalone: true,
-  imports: [
-    IonSelectOption,
-    IonItem,
-    IonList,
-    IonContent,
-    IonIcon,
-    IonButton,
-    IonTitle,
-    IonBackButton,
-    IonToolbar,
-    IonButtons,
-    IonHeader,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class UpdatePage implements OnInit {
   @Input() id = '';

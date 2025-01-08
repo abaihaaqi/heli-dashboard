@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonButton } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-analyze-table',
   templateUrl: './analyze-table.component.html',
   styleUrls: ['./analyze-table.component.scss'],
-  imports: [CommonModule, FormsModule, IonButton],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class AnalyzeTableComponent implements OnChanges {
   @Input() data: any[] = [];

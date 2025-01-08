@@ -1,40 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { logOutOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { MarkdownService } from '../../services/markdown.service';
 import { ChatService } from 'src/app/services/chat.service';
-import {
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonTitle,
-  IonIcon,
-  IonContent,
-  IonMenuButton,
-} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
   standalone: true,
-  imports: [
-    IonMenuButton,
-    IonContent,
-    IonIcon,
-    IonTitle,
-    IonButton,
-    IonButtons,
-    IonToolbar,
-    IonHeader,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class ChatPage implements OnInit {
   query = '';

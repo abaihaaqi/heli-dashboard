@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { Chart } from 'chart.js/auto';
 import { AnalyzeTableComponent } from '../analyze-table/analyze-table.component';
 
@@ -15,7 +15,7 @@ import { AnalyzeTableComponent } from '../analyze-table/analyze-table.component'
   selector: 'app-consumptions-chart',
   templateUrl: './consumptions-chart.component.html',
   styleUrls: ['./consumptions-chart.component.scss'],
-  imports: [IonSelect, IonSelectOption, FormsModule, AnalyzeTableComponent],
+  imports: [IonicModule, FormsModule, AnalyzeTableComponent],
 })
 export class ConsumptionsChartComponent implements OnInit, AfterViewInit {
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;

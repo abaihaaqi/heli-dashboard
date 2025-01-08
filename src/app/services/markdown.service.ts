@@ -1,24 +1,17 @@
 import { Injectable } from '@angular/core';
+import * as showdown from 'showdown';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarkdownService {
-  private converter: any;
+  private converter: showdown.Converter;
 
   constructor() {
-    this.loadShowdown();
-  }
-
-  async loadShowdown() {
-    const showdown = await import('showdown');
     this.converter = new showdown.Converter();
   }
 
-  async convertMarkdownToHtml(markdown: string): Promise<string> {
-    if (!this.converter) {
-      await this.loadShowdown();
-    }
+  convertMarkdownToHtml(markdown: string): string {
     return this.converter.makeHtml(markdown);
   }
 }
