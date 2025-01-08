@@ -26,8 +26,8 @@ export class UserApplianceService {
       })
       .pipe(
         tap((userAppliancesByRoom) => {
-          this.userAppliancesByRoomSubject.next(userAppliancesByRoom);
           this.roomsSubject.next(Object.keys(userAppliancesByRoom));
+          this.userAppliancesByRoomSubject.next(userAppliancesByRoom);
         }),
         catchError((error) => {
           console.error('Error fetching user appliances:', error);
@@ -51,12 +51,15 @@ export class UserApplianceService {
         tap((addedUserAppliance) => {
           const currentUserAppliances =
             this.userAppliancesByRoomSubject.getValue();
-          const targetRoom = currentUserAppliances[addedUserAppliance.room];
+          let targetRoom = currentUserAppliances[addedUserAppliance.room];
           if (!targetRoom) {
             currentUserAppliances[addedUserAppliance.room] = [];
           }
-          targetRoom.push(addedUserAppliance);
+          currentUserAppliances[addedUserAppliance.room].push(
+            addedUserAppliance
+          );
           this.userAppliancesByRoomSubject.next(currentUserAppliances);
+          this.roomsSubject.next(Object.keys(currentUserAppliances));
         }),
         catchError((error) => {
           console.error('Error adding user appliance:', error);
@@ -89,12 +92,19 @@ export class UserApplianceService {
             (userAppliance: any) => userAppliance.id != id
           );
           currentUserAppliances[prevRoom] = updatedPrevRoom;
+          if (updatedPrevRoom.length == 0) {
+            delete currentUserAppliances[prevRoom];
+          }
 
           // Update target room
           const targetRoomData = currentUserAppliances[targetRoom];
-          targetRoomData.push(updatedUserAppliance);
+          if (!targetRoomData) {
+            currentUserAppliances[targetRoom] = [];
+          }
+          currentUserAppliances[targetRoom].push(updatedUserAppliance);
 
           this.userAppliancesByRoomSubject.next(currentUserAppliances);
+          this.roomsSubject.next(Object.keys(currentUserAppliances));
         }),
         catchError((error) => {
           console.error('Error updating user appliance:', error);
@@ -132,7 +142,11 @@ export class UserApplianceService {
             (userAppliance: any) => userAppliance.id != id
           );
           currentUserAppliances[room] = updatedRoom;
+          if (updatedRoom.length == 0) {
+            delete currentUserAppliances[room];
+          }
           this.userAppliancesByRoomSubject.next(currentUserAppliances);
+          this.roomsSubject.next(Object.keys(currentUserAppliances));
         }),
         catchError((error) => {
           console.error('Error deleting user appliance:', error);

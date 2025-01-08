@@ -3,10 +3,16 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="nav-list">
-          <ion-img src="../assets/logo-transparent.png"></ion-img>
-          <ion-list-header>Dashboard</ion-list-header>
-
-          @for (p of appPages; track p; let i = $index) {
+          <ion-list-header>
+            <ion-img
+              class="ion-margin-end"
+              src="../assets/logo-transparent.png"
+            ></ion-img>
+            Dashboard
+          </ion-list-header>
+          @if (currentUser) {
+          <div class="ion-margin">Hello, {{ currentUser.name }}! 👋</div>
+          } @for (p of appPages; track p; let i = $index) {
           <ion-menu-toggle auto-hide="false">
             <ion-item
               routerDirection="root"

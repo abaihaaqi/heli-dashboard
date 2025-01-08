@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { UserApplianceService } from 'src/app/services/user-appliance.service';
+import { ConsumptionService } from 'src/app/services/consumption.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,12 @@ export class LoginPage implements OnInit {
   username: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private userApplianceService: UserApplianceService,
+    private consumptionService: ConsumptionService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -28,6 +35,8 @@ export class LoginPage implements OnInit {
       })
       .subscribe({
         next: () => {
+          this.userApplianceService.getAllData().subscribe();
+          this.consumptionService.getAllData().subscribe();
           this.router.navigate(['/']);
         },
         error: (error) => {

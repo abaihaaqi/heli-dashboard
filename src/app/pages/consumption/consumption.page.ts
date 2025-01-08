@@ -50,9 +50,16 @@ export class ConsumptionPage implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe();
     this.router.navigate(['/login']);
   }
 
-  reset() {}
+  reset() {
+    this.consumptionService.resetConsumptions().subscribe({
+      next: () => {
+        console.log('Consumptions reset successfully');
+      },
+      error: (err) => console.error('Error reset consumption:', err),
+    });
+  }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { RequestLogin, RequestRegister, User } from 'src/app/model/auth';
+import { RequestLogin, RequestRegister } from 'src/app/model/auth';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,13 +10,13 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  public currentUser$: Observable<any>;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('current_user') || 'null')
     );
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): any {
@@ -27,7 +27,7 @@ export class AuthService {
     return this.http.post<any>(`${environment.apiURL}/auth/register`, data);
   }
 
-  login(data: RequestLogin) {
+  login(data: RequestLogin): Observable<any> {
     return this.http
       .post<any>(`${environment.apiURL}/auth/login`, data, {
         withCredentials: true,
@@ -42,8 +42,17 @@ export class AuthService {
       );
   }
 
-  logout() {
-    localStorage.removeItem('current_user');
-    this.currentUserSubject.next(null);
+  logout(): Observable<any> {
+    return this.http
+      .get<any>(`${environment.apiURL}/auth/logout`, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => {
+          console.log(response);
+          localStorage.removeItem('current_user');
+          this.currentUserSubject.next(null);
+        })
+      );
   }
 }

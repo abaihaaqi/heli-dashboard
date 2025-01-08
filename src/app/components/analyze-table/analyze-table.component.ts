@@ -52,7 +52,6 @@ export class AnalyzeTableComponent implements OnChanges {
         }
         this.table.Consumption.push(current);
       }
-      console.log(this.table);
     }
   }
 

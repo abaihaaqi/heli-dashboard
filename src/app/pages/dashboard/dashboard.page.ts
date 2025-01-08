@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { createOutline, logOutOutline, trashBinOutline } from 'ionicons/icons';
 import { UserApplianceService } from 'src/app/services/user-appliance.service';
 import { ConsumptionService } from 'src/app/services/consumption.service';
 import { ReqAddConsumption } from 'src/app/model/consumption';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,11 +33,11 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.userApplianceService.getAllData().subscribe();
-    this.userApplianceService.userAppliancesByRoom$.subscribe((data) => {
-      this.userAppliancesByRoom = data;
-    });
     this.userApplianceService.rooms$.subscribe((data) => {
       this.rooms = data;
+    });
+    this.userApplianceService.userAppliancesByRoom$.subscribe((data) => {
+      this.userAppliancesByRoom = data;
     });
   }
 
@@ -77,7 +78,7 @@ export class DashboardPage implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe();
     this.router.navigate(['/login']);
   }
 }

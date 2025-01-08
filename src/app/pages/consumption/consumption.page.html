@@ -21,12 +21,8 @@
 
   @if (consumptions.length != 0) {
   <app-consumptions-chart [data]="consumptions"></app-consumptions-chart>
-  }
 
   <h1 class="table-header">Consumption Table</h1>
-  @if (consumptions.length == 0) {
-  <p>You haven't turned on any appliances</p>
-  } @else {
   <div class="table-slider">
     <div class="table-container">
       <table class="table">
@@ -64,5 +60,7 @@
     class="ion-margin-top reset-button"
     >Reset Table</ion-button
   >
+  } @else {
+  <p class="ion-margin">You haven't turned on any appliances</p>
   }
 </ion-content>
