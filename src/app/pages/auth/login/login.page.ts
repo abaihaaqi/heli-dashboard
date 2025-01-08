@@ -1,18 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { UserApplianceService } from 'src/app/services/user-appliance.service';
 import { ConsumptionService } from 'src/app/services/consumption.service';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonList,
+  IonItem,
+  IonButton,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, RouterLink],
+  imports: [
+    IonButton,
+    IonItem,
+    IonList,
+    IonContent,
+    IonTitle,
+    IonToolbar,
+    IonHeader,
+    CommonModule,
+    FormsModule,
+    RouterLink,
+  ],
 })
 export class LoginPage implements OnInit {
   username: string = '';

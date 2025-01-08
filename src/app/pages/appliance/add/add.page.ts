@@ -1,7 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonToolbar,
+  IonHeader,
+  IonButtons,
+  IonButton,
+  IonBackButton,
+  IonTitle,
+  IonIcon,
+  IonContent,
+  IonList,
+  IonItem,
+  IonSelect,
+  IonSelectOption,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { logOutOutline } from 'ionicons/icons';
 import { ApplianceService } from 'src/app/services/appliance.service';
@@ -13,7 +26,21 @@ import { UserApplianceService } from 'src/app/services/user-appliance.service';
   templateUrl: './add.page.html',
   styleUrls: ['./add.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule],
+  imports: [
+    IonHeader,
+    FormsModule,
+    IonToolbar,
+    IonButtons,
+    IonButton,
+    IonBackButton,
+    IonTitle,
+    IonIcon,
+    IonContent,
+    IonList,
+    IonItem,
+    IonSelect,
+    IonSelectOption,
+  ],
 })
 export class AddPage implements OnInit {
   appliances: any;
