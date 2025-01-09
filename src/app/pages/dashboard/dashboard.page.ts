@@ -1,22 +1,58 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { createOutline, logOutOutline, trashBinOutline } from 'ionicons/icons';
 import { UserApplianceService } from 'src/app/services/user-appliance.service';
 import { ConsumptionService } from 'src/app/services/consumption.service';
 import { ReqAddConsumption } from 'src/app/model/consumption';
-import { Subscription } from 'rxjs';
+import {
+  IonHeader,
+  IonToggle,
+  IonToolbar,
+  IonButtons,
+  IonTitle,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCard,
+  IonCol,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonMenuButton,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
+  imports: [
+    IonMenuButton,
+    IonCardContent,
+    IonCardTitle,
+    IonCardHeader,
+    IonCol,
+    IonCard,
+    IonRow,
+    IonGrid,
+    IonContent,
+    IonIcon,
+    IonButton,
+    IonTitle,
+    IonButtons,
+    IonToolbar,
+    IonToggle,
+    IonHeader,
+    CommonModule,
+    FormsModule,
+    RouterLink,
+  ],
 })
 export class DashboardPage implements OnInit {
   userAppliancesByRoom: any = {};

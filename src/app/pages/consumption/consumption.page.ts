@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { logOutOutline } from 'ionicons/icons';
@@ -7,12 +6,34 @@ import { addIcons } from 'ionicons';
 import { ConsumptionService } from 'src/app/services/consumption.service';
 import { FormsModule } from '@angular/forms';
 import { ConsumptionsChartComponent } from '../../components/consumptions-chart/consumptions-chart.component';
+import {
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonTitle,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonMenuButton,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-consumption',
   templateUrl: 'consumption.page.html',
   styleUrls: ['consumption.page.scss'],
-  imports: [FormsModule, IonicModule, ConsumptionsChartComponent],
+  standalone: true,
+  imports: [
+    IonMenuButton,
+    IonContent,
+    IonIcon,
+    IonButton,
+    IonTitle,
+    IonButtons,
+    IonToolbar,
+    IonHeader,
+    FormsModule,
+    ConsumptionsChartComponent,
+  ],
 })
 export class ConsumptionPage implements OnInit {
   consumptions: any = [];

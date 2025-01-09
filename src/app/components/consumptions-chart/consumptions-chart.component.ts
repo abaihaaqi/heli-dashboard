@@ -204,11 +204,7 @@ export class ConsumptionsChartComponent implements OnInit, AfterViewInit {
         (records as { consumptions: { [key: string]: any } }).consumptions
       ).reduce((result: { [key: string]: any }, [date, value]) => {
         const recordDate = new Date(date);
-        const timeStr = recordDate.toLocaleTimeString([], {
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-        });
+        const timeStr = `${String(recordDate.getHours()).padStart(2, '0')}:00`;
 
         if (recordDate >= start && recordDate <= end) {
           result[timeStr] = value;
@@ -229,6 +225,8 @@ export class ConsumptionsChartComponent implements OnInit, AfterViewInit {
   }
 
   private transformDataForChart() {
+    console.log(this.filteredData);
+
     // Generate hourly labels (00:00 to 23:00)
     const labels = Array.from(
       { length: 24 },

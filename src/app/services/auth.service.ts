@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { RequestLogin, RequestRegister } from 'src/app/model/auth';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +13,8 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser$: Observable<any>;
 
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('current_user') || 'null')
-    );
+  constructor(private http: HttpClient, private router: Router) {
+    this.currentUserSubject = new BehaviorSubject<any>(null);
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
@@ -28,31 +27,39 @@ export class AuthService {
   }
 
   login(data: RequestLogin): Observable<any> {
-    return this.http
-      .post<any>(`${environment.apiURL}/auth/login`, data, {
-        withCredentials: true,
+    return this.http.post<any>(`${environment.apiURL}/auth/login`, data).pipe(
+      map((response) => {
+        const sessionToken = response.session_token;
+        localStorage.setItem('session_token', response.session_token);
+        const arrayToken = sessionToken.split('.');
+        const tokenPayload = JSON.parse(atob(arrayToken[1]));
+        this.currentUserSubject.next(tokenPayload);
+        return response;
       })
-      .pipe(
-        map((response) => {
-          response.expires_at = new Date(response.expires_at).toISOString();
-          localStorage.setItem('current_user', JSON.stringify(response));
-          this.currentUserSubject.next(response);
+    );
+  }
+
+  autologin(): Observable<any> {
+    return this.http.get<any>(`${environment.apiURL}/auth/autologin`).pipe(
+      map((response) => {
+        const sessionToken = localStorage.getItem('session_token');
+        if (sessionToken) {
+          const arrayToken = sessionToken.split('.');
+          const tokenPayload = JSON.parse(atob(arrayToken[1]));
+          this.currentUserSubject.next(tokenPayload);
           return response;
-        })
-      );
+        }
+      })
+    );
   }
 
   logout(): Observable<any> {
-    return this.http
-      .get<any>(`${environment.apiURL}/auth/logout`, {
-        withCredentials: true,
+    return this.http.get<any>(`${environment.apiURL}/auth/logout`).pipe(
+      map((response) => {
+        console.log(response);
+        localStorage.removeItem('session_token');
+        this.currentUserSubject.next(null);
       })
-      .pipe(
-        map((response) => {
-          console.log(response);
-          localStorage.removeItem('current_user');
-          this.currentUserSubject.next(null);
-        })
-      );
+    );
   }
 }

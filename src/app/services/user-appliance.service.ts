@@ -20,52 +20,40 @@ export class UserApplianceService {
   constructor(private http: HttpClient) {}
 
   getAllData(): Observable<any> {
-    return this.http
-      .get<any[]>(`${this.baseURL}/get-all`, {
-        withCredentials: true,
+    return this.http.get<any[]>(`${this.baseURL}/get-all`).pipe(
+      tap((userAppliancesByRoom) => {
+        this.roomsSubject.next(Object.keys(userAppliancesByRoom));
+        this.userAppliancesByRoomSubject.next(userAppliancesByRoom);
+      }),
+      catchError((error) => {
+        console.error('Error fetching user appliances:', error);
+        return of([]);
       })
-      .pipe(
-        tap((userAppliancesByRoom) => {
-          this.roomsSubject.next(Object.keys(userAppliancesByRoom));
-          this.userAppliancesByRoomSubject.next(userAppliancesByRoom);
-        }),
-        catchError((error) => {
-          console.error('Error fetching user appliances:', error);
-          return of([]);
-        })
-      );
+    );
   }
 
   getDataByID(id: any): Observable<any> {
-    return this.http.get(`${this.baseURL}/get?id=${id}`, {
-      withCredentials: true,
-    });
+    return this.http.get(`${this.baseURL}/get?id=${id}`);
   }
 
   addUserAppliance(data: ReqAddUserAppliance): Observable<any> {
-    return this.http
-      .post<any>(`${this.baseURL}/add`, data, {
-        withCredentials: true,
+    return this.http.post<any>(`${this.baseURL}/add`, data).pipe(
+      tap((addedUserAppliance) => {
+        const currentUserAppliances =
+          this.userAppliancesByRoomSubject.getValue();
+        let targetRoom = currentUserAppliances[addedUserAppliance.room];
+        if (!targetRoom) {
+          currentUserAppliances[addedUserAppliance.room] = [];
+        }
+        currentUserAppliances[addedUserAppliance.room].push(addedUserAppliance);
+        this.userAppliancesByRoomSubject.next(currentUserAppliances);
+        this.roomsSubject.next(Object.keys(currentUserAppliances));
+      }),
+      catchError((error) => {
+        console.error('Error adding user appliance:', error);
+        throw error;
       })
-      .pipe(
-        tap((addedUserAppliance) => {
-          const currentUserAppliances =
-            this.userAppliancesByRoomSubject.getValue();
-          let targetRoom = currentUserAppliances[addedUserAppliance.room];
-          if (!targetRoom) {
-            currentUserAppliances[addedUserAppliance.room] = [];
-          }
-          currentUserAppliances[addedUserAppliance.room].push(
-            addedUserAppliance
-          );
-          this.userAppliancesByRoomSubject.next(currentUserAppliances);
-          this.roomsSubject.next(Object.keys(currentUserAppliances));
-        }),
-        catchError((error) => {
-          console.error('Error adding user appliance:', error);
-          throw error;
-        })
-      );
+    );
   }
 
   updateUserAppliance(
@@ -74,13 +62,7 @@ export class UserApplianceService {
     prevRoom: any
   ): Observable<any> {
     return this.http
-      .put<any>(
-        `${this.baseURL}/update`,
-        { id: id, room: targetRoom },
-        {
-          withCredentials: true,
-        }
-      )
+      .put<any>(`${this.baseURL}/update`, { id: id, room: targetRoom })
       .pipe(
         tap((updatedUserAppliance) => {
           const currentUserAppliances =
@@ -129,29 +111,25 @@ export class UserApplianceService {
   }
 
   deleteUserAppliance(id: any, room: any): Observable<any> {
-    return this.http
-      .delete<void>(`${this.baseURL}/delete?id=${id}`, {
-        withCredentials: true,
+    return this.http.delete<void>(`${this.baseURL}/delete?id=${id}`).pipe(
+      tap(() => {
+        const currentUserAppliances =
+          this.userAppliancesByRoomSubject.getValue();
+        const targetRoom = currentUserAppliances[room];
+        const updatedRoom = targetRoom.filter(
+          (userAppliance: any) => userAppliance.id != id
+        );
+        currentUserAppliances[room] = updatedRoom;
+        if (updatedRoom.length == 0) {
+          delete currentUserAppliances[room];
+        }
+        this.userAppliancesByRoomSubject.next(currentUserAppliances);
+        this.roomsSubject.next(Object.keys(currentUserAppliances));
+      }),
+      catchError((error) => {
+        console.error('Error deleting user appliance:', error);
+        throw error;
       })
-      .pipe(
-        tap(() => {
-          const currentUserAppliances =
-            this.userAppliancesByRoomSubject.getValue();
-          const targetRoom = currentUserAppliances[room];
-          const updatedRoom = targetRoom.filter(
-            (userAppliance: any) => userAppliance.id != id
-          );
-          currentUserAppliances[room] = updatedRoom;
-          if (updatedRoom.length == 0) {
-            delete currentUserAppliances[room];
-          }
-          this.userAppliancesByRoomSubject.next(currentUserAppliances);
-          this.roomsSubject.next(Object.keys(currentUserAppliances));
-        }),
-        catchError((error) => {
-          console.error('Error deleting user appliance:', error);
-          throw error;
-        })
-      );
+    );
   }
 }

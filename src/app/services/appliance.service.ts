@@ -10,8 +10,6 @@ export class ApplianceService {
   constructor(private http: HttpClient) {}
 
   getAllData(): Observable<any> {
-    return this.http.get(`${environment.apiURL}/appliance/get-all`, {
-      withCredentials: true,
-    });
+    return this.http.get(`${environment.apiURL}/appliance/get-all`);
   }
 }

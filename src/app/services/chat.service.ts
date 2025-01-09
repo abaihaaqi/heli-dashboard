@@ -9,22 +9,13 @@ export class ChatService {
   constructor(private http: HttpClient) {}
 
   analyzeTable(table: any, query: string) {
-    return this.http.post<string>(
-      `${environment.apiURL}/chat/analyze-data`,
-      { table, query },
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.post<string>(`${environment.apiURL}/chat/analyze-data`, {
+      table,
+      query,
+    });
   }
 
   chat(query: string) {
-    return this.http.post<string>(
-      `${environment.apiURL}/chat/new`,
-      { query },
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.post<string>(`${environment.apiURL}/chat/new`, { query });
   }
 }

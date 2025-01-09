@@ -1,15 +1,42 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { homeOutline, chatboxOutline, flashOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { AuthService } from './services/auth.service';
+import {
+  IonApp,
+  IonSplitPane,
+  IonContent,
+  IonList,
+  IonListHeader,
+  IonImg,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonMenu,
+  IonMenuToggle,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrl: 'app.component.scss',
-  imports: [IonicModule, RouterLink, RouterLinkActive],
+  standalone: true,
+  imports: [
+    IonMenuToggle,
+    IonMenu,
+    IonRouterOutlet,
+    IonLabel,
+    IonIcon,
+    IonImg,
+    IonListHeader,
+    IonList,
+    IonContent,
+    IonSplitPane,
+    IonApp,
+    RouterLink,
+    RouterLinkActive,
+  ],
 })
 export class AppComponent {
   public appPages = [
